@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Irony.Parsing;
 using Irony.Ast;
+using System.Collections;
 
 namespace Proyecto_1_201504381
 {
     class Gramatica : Grammar
     {
+
+        ArrayList errores = new ArrayList();
+        string errorEncontrado;
         public Gramatica() : base(true) { //True es Case Sensitive - False es No Case Sensitive
             
             #region ER
@@ -56,7 +60,7 @@ namespace Proyecto_1_201504381
             KeyTerm Void = ToTerm("void");
             KeyTerm arroba = ToTerm("@");
             KeyTerm ov = ToTerm("Override");
-            KeyTerm This = ToTerm("this");
+            KeyTerm thisP = ToTerm("this");
             KeyTerm si = ToTerm("if");
             KeyTerm verdad = ToTerm("true");
             KeyTerm falso = ToTerm("false");
@@ -81,8 +85,10 @@ namespace Proyecto_1_201504381
             KeyTerm For = ToTerm("for");
             KeyTerm regresar = ToTerm("return");
             KeyTerm continuar = ToTerm("continue");
-            #endregion
+            KeyTerm comillaaS = ToTerm("'");
             
+            #endregion
+
             #region Non-Terminals 
             NonTerminal S = new NonTerminal("S");
             NonTerminal INICIO = new NonTerminal("INICIO");
@@ -134,18 +140,23 @@ namespace Proyecto_1_201504381
 
             INICIO.Rule = AMBITO + clase + id + EXTENDS + corcheteAbrierto + INSTRUCCIONES + corcheteCerado;
 
-            INICIO.ErrorRule = SyntaxError + corcheteAbrierto;
+            INICIO.ErrorRule = SyntaxError + "}";
 
             EXTENDS.Rule = extiende + id
                 | Empty;
+            
 
             AMBITO.Rule = publica
               | privada
               | protegido
               | Empty;
 
-            INSTRUCCIONES.Rule = INSTRUCCIONES + DECLARACIONES
-                | DECLARACIONES;
+            INSTRUCCIONES.Rule = //MakeStarRule(INSTRUCCIONES , DECLARACIONES);
+                INSTRUCCIONES + DECLARACIONES
+               | DECLARACIONES;
+
+            
+
 
             DECLARACIONES.Rule = VARIABLES//------------------DECLARACIONES
                 | CONSTRUCTOR
@@ -157,12 +168,16 @@ namespace Proyecto_1_201504381
                 | WHILE
                 | DO
                 | FOR
-                | RETURN//------componer los parentesis
+                //| RETURN//------componer los parentesis
                 | freno + puntoycoma
                 | continuar + puntoycoma;
+            DECLARACIONES.ErrorRule = SyntaxError + ";";
+           DECLARACIONES.ErrorRule = SyntaxError + "}";
 
             INSTRUCCIONES_FUNCIONES.Rule = INSTRUCCIONES_FUNCIONES + DECLARACIONES_FUNCIONES
                | DECLARACIONES_FUNCIONES;
+
+
 
             DECLARACIONES_FUNCIONES.Rule = VARIABLES//------------------DECLARACIONES FUNCIONES
                                                     // | CONSTRUCTOR
@@ -225,7 +240,7 @@ namespace Proyecto_1_201504381
                 | WHILE
                 | DO
                 | FOR
-                | RETURN//------componer los parentesis
+                | RETURN
                 | freno + puntoycoma
                 | continuar + puntoycoma;
 
@@ -262,6 +277,8 @@ namespace Proyecto_1_201504381
                 | igual + EXPRESION + puntoycoma
                 | igual + nulo + puntoycoma
                 | igual + L_ID + puntoycoma
+                | igual + comillaaS + Empty + comillaaS
+                //|igual + comillasSimples + EXPRESION + comillasSimples
                 // |INICIALIZAR+igual+OBJETO+puntoycoma
                 //|igual + OBJETO+puntoycoma
                 | igual + nuevo + id + parentesisAbierto + PARAMETROS + parentesisCerrado + puntoycoma;
@@ -272,6 +289,10 @@ namespace Proyecto_1_201504381
                 | punto + id
                 | id
                 | id + parentesisAbierto + PARAMETROS + parentesisCerrado
+
+                | id + parentesisAbierto + thisP + punto + id + parentesisCerrado
+
+
                 | Empty;
 
             EXPRESION.Rule = EXPRESION + mas + EXPRESION
@@ -371,11 +392,60 @@ namespace Proyecto_1_201504381
             
             #region Preferences
             this.Root = S;
-            MarkPunctuation(IF,FOR,WHILE,DO,SWITCH,CASO);
+            //MarkPunctuation(IF,FOR,WHILE,DO,SWITCH,CASO,INICIALIZAR);
             this.RegisterOperators(1, Associativity.Left, mas, menos);
             this.RegisterOperators(2, Associativity.Left, por, division);
             this.RegisterOperators(3, Associativity.Left, elev);
             #endregion
+
+        }
+
+        public override void ReportParseError(ParsingContext context)
+        {
+            String error = (String)context.CurrentToken.ValueString;
+
+            
+
+            String type;
+            int fila, columna;
+            
+
+            if (error.Contains("Invalid character"))
+            {
+                type = "Error Lexico";
+                string DStr = "";
+                char[] delimit = DStr.ToCharArray();
+                string[] div = error.Split(delimit, 2);
+                div = div[1].Split('.');
+                string caracter = div[0].ToString();
+                string[] words = caracter.Split(' ');
+                error = words[1] + "No pertenece al lemguaje";
+                fila = context.Source.Location.Line;
+                columna = context.Source.Location.Column;
+                Errores nEr = new Errores(fila, columna, type, error);
+                this.errores.Add(nEr);
+            }
+            else
+            {
+
+                type = "Error sintactico";
+                fila = context.Source.Location.Line;
+                columna = context.Source.Location.Column;
+                Errores nEr = new Errores(fila, columna, type, "Se esperaba: " + error );
+                this.errores.Add(nEr);
+            }
+
+            
+            
+
+            
+            base.ReportParseError(context);
+        }
+
+
+        public ArrayList Error
+        {
+            get { return errores; }
 
         }
     }

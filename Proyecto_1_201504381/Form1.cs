@@ -11,6 +11,7 @@ using System.IO;
 using Microsoft.VisualBasic;
 using System.Diagnostics;
 using Irony.Parsing;
+using System.Collections;
 
 namespace Proyecto_1_201504381
 {
@@ -18,10 +19,21 @@ namespace Proyecto_1_201504381
     {
         ParseTree arbol = null;
         Graficas GraficarAST = new Graficas();
+        Analizador analizador_T = new Analizador();
         //Path para abrir todos los documentos de treeview
         String Path = @"C:\Users\julio Cotzojay\Documents\USAC\SEGUNDO SEMESTRE 2017\COMPI 1\Archivos De Entrada Proyecto 1 OLC1 - copia";
         String PathTree= @"C:\Users\julio Cotzojay\Documents\USAC\SEGUNDO SEMESTRE 2017\COMPI 1";
+
+        String debug = "";
+        String instruccionesNo = "";
+
         
+        Sintactico tmp = new Sintactico();
+        ArrayList errores = new ArrayList();
+        List<Token> tokens = new List<Token>();
+        int x = 1;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -288,47 +300,222 @@ namespace Proyecto_1_201504381
 
         private void button1_Analizar_Click(object sender, EventArgs e)
         {
-            int selectedTab = tabControl1.SelectedIndex;
+            errores.Clear();
+            tokens.Clear();
+            tmp.Error.Clear();
+            tmp.Tokens.Clear();
+
+
+
+            /*int selectedTab = tabControl1.SelectedIndex;
             Control ctrl = tabControl1.Controls[selectedTab].Controls[0];
             TextBox richtext = ctrl as TextBox;
 
             if (richtext.Text != "")
             {
 
+                Analizador analizarArchibo = new Analizador();
+
                 Gramatica gramatica = new Gramatica();
                 Parser parser = new Parser(gramatica);
 
                 String entrada = richtext.Text;
                 arbol = parser.Parse(entrada);
+                //analizarArchibo.analizar(richtext.Text);
 
-                if (arbol.Root != null)
+                ParseTreeNode raiz = Sintactico.analizar(tabControl1.SelectedTab.Controls[0].Text);
+
+                if (arbol.Root != null && raiz != null )
                 {
                     MessageBox.Show("Analisis completado");
-                    GraficarAST.GraficarArbol(arbol.Root);
+
+                    //GraficarAST.GraficarArbol(arbol.Root);
+                    debug += analizarArchibo.RecorrerAST(arbol.Root);
+                    //textBox1.Text = debug+"\n";
+
 
                 }
                 else
                 {
+                    errores = tmp.Error;
                     MessageBox.Show("Existe error lexico o sintactico");
                     toolStripButton2_Reportes.PerformClick();
+                    debug = "";
+                    instruccionesNo = "";
+                    Analizador.instrucciones.Clear();
                 }
             }
             else
             {
                 MessageBox.Show("Seleccione un archivo .java para analizar");
+            }*/
+            try
+            {
+                for (int i = 0; i < treeView1.SelectedNode.GetNodeCount(true); i++)
+                {
+                    MessageBox.Show(PathTree + treeView1.SelectedNode.Nodes[i].FullPath);
+                    //MessageBox.Show(treeView1.SelectedNode.FullPath);
+                    TreeNode node = treeView1.SelectedNode;
+                    // Set the tree view's PathSeparator property.
+                    //MessageBox.Show(string.Format(PathTree +"\\"+ treeView1.SelectedNode.FullPath));
+                    try
+                    {
+                        TabPage tp = new TabPage(treeView1.SelectedNode.Nodes[i].Text);
+                        tabControl1.TabPages.Add(tp);
+                        TextBox tb = new TextBox();
+                        tb.Text = File.ReadAllText(PathTree + "\\" + treeView1.SelectedNode.Nodes[i].FullPath);
+                        tb.Dock = DockStyle.Fill;
+                        tb.Multiline = true;
+                        tb.AcceptsTab = true;
+                        tb.ScrollBars = ScrollBars.Both;
+                        tp.Controls.Add(tb);
+                    }
+                    catch (Exception ea)
+                    {
+
+                    }
+
+                }
+                for (int i = 0; i < treeView1.SelectedNode.GetNodeCount(true); i++)
+                {
+                    int selectedTab = i;
+                    Control ctrl = tabControl1.Controls[selectedTab].Controls[0];
+                    TextBox richtext = ctrl as TextBox;
+
+                    if (richtext.Text != "")
+                    {
+                        Analizador analizarArchibo = new Analizador();
+
+                        Gramatica gramatica = new Gramatica();
+                        Parser parser = new Parser(gramatica);
+
+                        String entrada = richtext.Text;
+                        arbol = parser.Parse(entrada);
+                        //analizarArchibo.analizar(richtext.Text);
+
+                        ParseTreeNode raiz = Sintactico.analizar(tabControl1.SelectedTab.Controls[0].Text);
+                       
+                        arbol = parser.Parse(entrada);
+
+                        if (arbol.Root != null && raiz != null)
+                        {
+                            MessageBox.Show("Analisis completado");
+                            debug += analizarArchibo.RecorrerAST(arbol.Root);
+                            //GraficarAST.GraficarArbol(arbol.Root);
+
+                        }
+                        else
+                        {
+                            errores = tmp.Error;
+                            MessageBox.Show("Existe error lexico o sintactico");
+                            toolStripButton2_Reportes.PerformClick();
+                            debug = "";
+                            instruccionesNo = "";
+                            Analizador.instrucciones.Clear();
+                            toolStripButton2_Reportes.PerformClick();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Seleccione un archivo .java para analizar");
+                    }
+                }
+
+
+            }
+            catch
+            {
+
             }
 
-           
+
         }
+
+        int no_uml = 0;
 
         private void toolStripButton1_UML_Click(object sender, EventArgs e)
         {
+            GenerarUML G_UML = new GenerarUML();
+            ArrayList list2 = new ArrayList();
+            list2 = RemoveDuplicate(Analizador.instrucciones);
+            foreach (String item in list2)
+            {
+                instruccionesNo += item + " ";
+            }
+            debug += instruccionesNo;
+            G_UML.Generar_UML(debug,no_uml);
             MessageBox.Show("UML GENERADO CON EXITO");
+            try
+            {
+                TabPage tp = new TabPage("UML"+ no_uml);
+                tabControl1.TabPages.Add(tp);
+                PictureBox ilabel = new PictureBox(); // create a label
+                //ilabel.Image = new System.Drawing.Bitmap("UML.jpg");
+                Image i = Image.FromFile("UML"+ no_uml+".jpg"); // read in image
+                ilabel.SizeMode = PictureBoxSizeMode.StretchImage;
+                ilabel.Size = new Size(970,455); //set label to correct size
+                ilabel.Image = i; // put image on label
+                this.Controls.Add(ilabel); // add label to container (a form, for instance)
+
+                tp.Controls.Add(ilabel);
+                debug = "";
+                no_uml++;
+                MessageBox.Show(debug);
+            }
+            
+            
+            catch (Exception ea)
+            {
+
+            }
+
+
         }
 
         private void toolStripButton2_Reportes_Click(object sender, EventArgs e)
         {
             MessageBox.Show("REPORTE DE ERRORES");
+            HTML.Errores(errores);
+            Process.Start(@"Errores.html");
+        }
+        
+
+        private static ArrayList RemoveDuplicate(ArrayList sourceList)
+        {
+            ArrayList list = new ArrayList();
+            foreach (string item in sourceList)
+            {
+                if (!list.Contains(item))
+                {
+                    list.Add(item);
+                }
+            }
+            return list;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < this.tabControl1.TabCount; i++)
+                    if (i == tabControl1.SelectedIndex)
+                        tabControl1.TabPages.RemoveAt(i--);
+                debug = "";
+            }
+            catch
+            {
+
+            }
         }
     }
 }

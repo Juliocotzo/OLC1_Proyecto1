@@ -31,7 +31,7 @@ namespace Proyecto_1_201504381
                 proc.WaitForExit();
 
                 Thread.Sleep(2000);
-                //Process.Start(@"Arbol.jpg");
+                Process.Start(@"Arbol.jpg");
             }
             catch (Exception x)
             {

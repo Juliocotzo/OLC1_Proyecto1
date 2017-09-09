@@ -33,22 +33,23 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crearProyectoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crearClaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.button1_Analizar = new System.Windows.Forms.Button();
-            this.osSkin1 = new SkinSoft.OSSkin.OSSkin(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1_Proyecto = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1_Clase = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1_Eliminar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1_UML = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2_Reportes = new System.Windows.Forms.ToolStripButton();
-            this.crearProyectoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crearClaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1_Analizar = new System.Windows.Forms.Button();
+            this.osSkin1 = new SkinSoft.OSSkin.OSSkin(this.components);
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -62,7 +63,7 @@
             this.archivoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2504, 49);
+            this.menuStrip1.Size = new System.Drawing.Size(3323, 49);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -84,11 +85,35 @@
             this.abrirToolStripMenuItem.Text = "Abrir";
             this.abrirToolStripMenuItem.Click += new System.EventHandler(this.abrirToolStripMenuItem_Click);
             // 
+            // crearProyectoToolStripMenuItem
+            // 
+            this.crearProyectoToolStripMenuItem.Image = global::Proyecto_1_201504381.Properties.Resources._033_folder;
+            this.crearProyectoToolStripMenuItem.Name = "crearProyectoToolStripMenuItem";
+            this.crearProyectoToolStripMenuItem.Size = new System.Drawing.Size(328, 46);
+            this.crearProyectoToolStripMenuItem.Text = "Crear Proyecto";
+            this.crearProyectoToolStripMenuItem.Click += new System.EventHandler(this.crearProyectoToolStripMenuItem_Click);
+            // 
+            // crearClaseToolStripMenuItem
+            // 
+            this.crearClaseToolStripMenuItem.Image = global::Proyecto_1_201504381.Properties.Resources._020_file_4;
+            this.crearClaseToolStripMenuItem.Name = "crearClaseToolStripMenuItem";
+            this.crearClaseToolStripMenuItem.Size = new System.Drawing.Size(328, 46);
+            this.crearClaseToolStripMenuItem.Text = "Crear Clase";
+            this.crearClaseToolStripMenuItem.Click += new System.EventHandler(this.crearClaseToolStripMenuItem_Click);
+            // 
+            // eliminarToolStripMenuItem
+            // 
+            this.eliminarToolStripMenuItem.Image = global::Proyecto_1_201504381.Properties.Resources._039_delete;
+            this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
+            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(328, 46);
+            this.eliminarToolStripMenuItem.Text = "Eliminar";
+            this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
+            // 
             // treeView1
             // 
             this.treeView1.Location = new System.Drawing.Point(37, 13);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(643, 862);
+            this.treeView1.Size = new System.Drawing.Size(643, 1144);
             this.treeView1.TabIndex = 1;
             this.treeView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDoubleClick);
             // 
@@ -97,7 +122,7 @@
             this.tabControl1.Location = new System.Drawing.Point(700, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1711, 862);
+            this.tabControl1.Size = new System.Drawing.Size(2599, 1144);
             this.tabControl1.TabIndex = 2;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
             this.tabControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabControl1_MouseDown);
@@ -108,7 +133,7 @@
             this.panel1.Controls.Add(this.treeView1);
             this.panel1.Location = new System.Drawing.Point(5, 161);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2434, 878);
+            this.panel1.Size = new System.Drawing.Size(3302, 1160);
             this.panel1.TabIndex = 9;
             // 
             // toolStrip1
@@ -121,38 +146,13 @@
             this.toolStripSeparator1,
             this.toolStripButton1_UML,
             this.toolStripSeparator2,
-            this.toolStripButton2_Reportes});
+            this.toolStripButton2_Reportes,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 49);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(2504, 48);
+            this.toolStrip1.Size = new System.Drawing.Size(3323, 47);
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // button1_Analizar
-            // 
-            this.button1_Analizar.Location = new System.Drawing.Point(2201, 1065);
-            this.button1_Analizar.Name = "button1_Analizar";
-            this.button1_Analizar.Size = new System.Drawing.Size(215, 57);
-            this.button1_Analizar.TabIndex = 11;
-            this.button1_Analizar.Text = "Analizar";
-            this.button1_Analizar.UseVisualStyleBackColor = true;
-            this.button1_Analizar.Click += new System.EventHandler(this.button1_Analizar_Click);
-            // 
-            // osSkin1
-            // 
-            this.osSkin1.HostForm = null;
-            this.osSkin1.License = ((SkinSoft.OSSkin.Licensing.OSSkinLicense)(resources.GetObject("osSkin1.License")));
-            this.osSkin1.Style = SkinSoft.OSSkin.SkinStyle.MacOSXLeopard;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 48);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 48);
             // 
             // toolStripButton1_Proyecto
             // 
@@ -184,6 +184,11 @@
             this.toolStripButton1_Eliminar.Text = "Eliminar";
             this.toolStripButton1_Eliminar.Click += new System.EventHandler(this.toolStripButton1_Eliminar_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 48);
+            // 
             // toolStripButton1_UML
             // 
             this.toolStripButton1_UML.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -193,6 +198,11 @@
             this.toolStripButton1_UML.Size = new System.Drawing.Size(44, 45);
             this.toolStripButton1_UML.Text = "Generar UML";
             this.toolStripButton1_UML.Click += new System.EventHandler(this.toolStripButton1_UML_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 48);
             // 
             // toolStripButton2_Reportes
             // 
@@ -204,36 +214,38 @@
             this.toolStripButton2_Reportes.Text = "Reporte de Errores";
             this.toolStripButton2_Reportes.Click += new System.EventHandler(this.toolStripButton2_Reportes_Click);
             // 
-            // crearProyectoToolStripMenuItem
+            // button1_Analizar
             // 
-            this.crearProyectoToolStripMenuItem.Image = global::Proyecto_1_201504381.Properties.Resources._033_folder;
-            this.crearProyectoToolStripMenuItem.Name = "crearProyectoToolStripMenuItem";
-            this.crearProyectoToolStripMenuItem.Size = new System.Drawing.Size(328, 46);
-            this.crearProyectoToolStripMenuItem.Text = "Crear Proyecto";
-            this.crearProyectoToolStripMenuItem.Click += new System.EventHandler(this.crearProyectoToolStripMenuItem_Click);
+            this.button1_Analizar.Location = new System.Drawing.Point(3089, 1327);
+            this.button1_Analizar.Name = "button1_Analizar";
+            this.button1_Analizar.Size = new System.Drawing.Size(215, 57);
+            this.button1_Analizar.TabIndex = 11;
+            this.button1_Analizar.Text = "Analizar";
+            this.button1_Analizar.UseVisualStyleBackColor = true;
+            this.button1_Analizar.Click += new System.EventHandler(this.button1_Analizar_Click);
             // 
-            // crearClaseToolStripMenuItem
+            // osSkin1
             // 
-            this.crearClaseToolStripMenuItem.Image = global::Proyecto_1_201504381.Properties.Resources._020_file_4;
-            this.crearClaseToolStripMenuItem.Name = "crearClaseToolStripMenuItem";
-            this.crearClaseToolStripMenuItem.Size = new System.Drawing.Size(328, 46);
-            this.crearClaseToolStripMenuItem.Text = "Crear Clase";
-            this.crearClaseToolStripMenuItem.Click += new System.EventHandler(this.crearClaseToolStripMenuItem_Click);
+            this.osSkin1.HostForm = null;
+            this.osSkin1.License = ((SkinSoft.OSSkin.Licensing.OSSkinLicense)(resources.GetObject("osSkin1.License")));
+            this.osSkin1.Style = SkinSoft.OSSkin.SkinStyle.MacOSXAqua;
             // 
-            // eliminarToolStripMenuItem
+            // toolStripButton1
             // 
-            this.eliminarToolStripMenuItem.Image = global::Proyecto_1_201504381.Properties.Resources._039_delete;
-            this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
-            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(328, 46);
-            this.eliminarToolStripMenuItem.Text = "Eliminar";
-            this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::Proyecto_1_201504381.Properties.Resources._038_delete_1;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(44, 45);
+            this.toolStripButton1.Text = "Cerrar Tabs";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2504, 1149);
+            this.ClientSize = new System.Drawing.Size(3323, 1396);
             this.Controls.Add(this.button1_Analizar);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
@@ -275,6 +287,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1_UML;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton2_Reportes;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 
